@@ -1,0 +1,143 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Pics/earth_small.png" type="Texture" id=1]
+[ext_resource path="res://Script/earth.gd" type="Script" id=2]
+[ext_resource path="res://Pics/atmosphere.png" type="Texture" id=3]
+[ext_resource path="res://Pics/thrusters_1.png" type="Texture" id=4]
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 24.0
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "New Anim",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "New Anim",
+"speed": 5.0
+} ]
+
+[sub_resource type="Gradient" id=4]
+colors = PoolColorArray( 0.506058, 0.981445, 0.889525, 1, 0.588235, 0.94902, 0.866667, 0 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+width = 20
+
+[sub_resource type="ParticlesMaterial" id=6]
+trail_divisor = 10
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+direction = Vector3( -1.103, 5.325, 0 )
+spread = 13.96
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+angular_velocity = 720.0
+angular_velocity_random = 0.86
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.5
+scale_random = 0.86
+color_ramp = SubResource( 5 )
+hue_variation = -0.04
+hue_variation_random = 0.62
+
+[sub_resource type="ParticlesMaterial" id=7]
+trail_divisor = 10
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+direction = Vector3( 1.103, 5.325, 0 )
+spread = 13.96
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+angular_velocity = 720.0
+angular_velocity_random = 0.86
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.5
+scale_random = 0.86
+color_ramp = SubResource( 5 )
+hue_variation = -0.04
+hue_variation_random = 0.62
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0.0152672, 0.801527, 1, 2.172 )
+colors = PoolColorArray( 0.581932, 0.993164, 0.914996, 0.862595, 0.505882, 0.980392, 0.890196, 0, 0, 1, 0.811765, 0, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+width = 2
+
+[sub_resource type="ParticlesMaterial" id=10]
+trail_divisor = 200
+emission_shape = 2
+emission_box_extents = Vector3( 15.305, 4.533, 1 )
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 138.51
+angular_velocity = 500.0
+angular_velocity_random = 0.86
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 22.99
+radial_accel = 134.06
+angle = 12.8
+angle_random = 0.67
+scale = 0.8
+scale_random = 0.86
+color_ramp = SubResource( 9 )
+hue_variation = -0.04
+hue_variation_random = 0.62
+
+[node name="earth" type="KinematicBody2D"]
+script = ExtResource( 2 )
+rotateSpd = 0.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 11 )
+
+[node name="continent" type="AnimatedSprite" parent="."]
+frames = SubResource( 12 )
+animation = "New Anim"
+
+[node name="atmosphere" type="AnimatedSprite" parent="."]
+z_index = 1
+frames = SubResource( 13 )
+animation = "New Anim"
+
+[node name="thrusters_1" type="Sprite" parent="."]
+position = Vector2( 0, 10 )
+z_index = 1
+texture = ExtResource( 4 )
+
+[node name="left_thrust" type="Particles2D" parent="thrusters_1"]
+position = Vector2( -22.6727, -4.10542 )
+amount = 100
+lifetime = 0.2
+visibility_rect = Rect2( -100, -100, 200.137, 200 )
+process_material = SubResource( 6 )
+
+[node name="right_thrust" type="Particles2D" parent="thrusters_1"]
+position = Vector2( 22.673, -4.105 )
+amount = 100
+lifetime = 0.2
+visibility_rect = Rect2( -100, -100, 200.137, 200 )
+process_material = SubResource( 7 )
+
+[node name="forward_thrust" type="Particles2D" parent="thrusters_1"]
+position = Vector2( 0, 12.689 )
+amount = 6000
+lifetime = 0.2
+visibility_rect = Rect2( -100, -100, 200.137, 200 )
+process_material = SubResource( 10 )
